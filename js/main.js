@@ -113,65 +113,46 @@ var filters = mapElement.querySelector('.map__filters-container');
 var photoTemplate = document.querySelector('#photo').content.querySelector('.popup__photo');
 
 var getTypeHouse = function (type) {
-  var typeHouse = null;
-
   switch (type) {
     case 'flat':
-      typeHouse = 'Квартира';
-      break;
+      return 'Квартира';
     case 'bungalo':
-      typeHouse = 'Бунгало';
-      break;
+      return 'Бунгало';
     case 'house':
-      typeHouse = 'Дом';
-      break;
+      return 'Дом';
     case 'palace':
-      typeHouse = 'Дворец';
-      break;
+      return 'Дворец';
     default:
-      typeHouse = 'Тип жилья не известен';
-      break;
-  }
-
-  return typeHouse;
-};
-
-var deleteElements = function (parent) {
-  while (parent.firstChild) {
-    parent.firstChild.remove();
+      return 'Тип жилья не известен';
   }
 };
 
-var renderFeatures = function (advert, parent) {
-  advert.offer.features.forEach(function (feature) {
+var getFeatures = function (features) {
+  var fragment = document.createDocumentFragment();
+
+  features.forEach(function (feature) {
     var itemElement = document.createElement('li');
     itemElement.classList.add('popup__feature');
     itemElement.classList.add('popup__feature--' + feature);
 
-    parent.appendChild(itemElement);
+    fragment.appendChild(itemElement);
   });
+
+  return fragment;
 };
 
-var appendFeatures = function (advert, parent) {
-  deleteElements(parent);
+var getPhotos = function (photos) {
+  var fragment = document.createDocumentFragment();
 
-  renderFeatures(advert, parent);
-};
-
-var renderPhotos = function (advert, parent) {
-  advert.offer.photos.forEach(function (photo) {
+  photos.forEach(function (photo) {
     var photoElement = photoTemplate.cloneNode(true);
 
     photoElement.src = photo;
 
-    parent.appendChild(photoElement);
+    fragment.appendChild(photoElement);
   });
-};
 
-var appendPhotos = function (advert, parent) {
-  deleteElements(parent);
-
-  renderPhotos(advert, parent);
+  return fragment;
 };
 
 var appendCard = function (advert) {
@@ -188,8 +169,8 @@ var appendCard = function (advert) {
   popupElement.querySelector('.popup__title').textContent = advert.offer.title;
   popupElement.querySelector('.popup__type').textContent = getTypeHouse(advert.offer.type);
 
-  appendFeatures(advert, popupElement.querySelector('.popup__features'));
-  appendPhotos(advert, popupElement.querySelector('.popup__photos'));
+  popupElement.querySelector('.popup__features').appendChild(getFeatures(advert.offer.features));
+  popupElement.querySelector('.popup__photos').appendChild(getPhotos(advert.offer.photos));
 
   mapElement.insertBefore(popupElement, filters);
 };
