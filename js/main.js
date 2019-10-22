@@ -19,6 +19,8 @@ var mapElement = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinsElement = document.querySelector('.map__pins');
 
+var elementDisabled = false;
+
 var getRandomNumber = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
 };
@@ -104,8 +106,6 @@ var showPins = function (adverts) {
 
 var adverts = generateAdverts();
 
-showPins(adverts);
-
 /* ----- Личный проект: больше деталей ----- */
 
 var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
@@ -175,4 +175,99 @@ var appendCard = function (advert) {
   mapElement.insertBefore(popupElement, filters);
 };
 
-appendCard(adverts[0]);
+if (elementDisabled) {
+  appendCard(adverts[0]);
+}
+
+
+/* ----- Личный проект: подробности ----- */
+
+var KEYCODE_ENTER = 13;
+
+var StatePage = {
+  ACTIVE: false,
+  INACTIVE: true
+};
+
+var adFormElement = document.querySelector('.ad-form');
+var inputAddressElement = adFormElement.querySelector('#address');
+var fieldsetElements = adFormElement.querySelectorAll('fieldset');
+var filtersElement = mapElement.querySelector('.map__filters');
+var filterElements = filtersElement.querySelectorAll('.map__filter');
+var featuresElement = mapElement.querySelector('.map__features');
+var pinMainElement = mapElement.querySelector('.map__pin--main');
+var pinImgElement = pinMainElement.querySelector('img');
+
+var Coord = function (coord) {
+  this.height = coord.height;
+  this.left = coord.left + window.pageXOffset;
+  this.top = coord.top + window.pageYOffset;
+  this.width = coord.width;
+};
+
+var getPinLocation = function (locationX, locationY) {
+  return parseFloat(locationX) + ', ' + parseFloat(locationY);
+};
+
+var setAddressPinLocationInactive = function () {
+  var pinMainCoords = new Coord(pinMainElement.getBoundingClientRect());
+
+  inputAddressElement.value = getPinLocation(Math.round(pinMainCoords.left + pinMainCoords.width / 2),
+      Math.round(pinMainCoords.top + pinMainCoords.height / 2));
+};
+
+var setAddressPinLocationActive = function () {
+  var pinImgCoords = new Coord(pinImgElement.getBoundingClientRect());
+  var pinAfterElement = getComputedStyle(pinMainElement, '::after');
+
+  inputAddressElement.value = getPinLocation(Math.round(pinImgCoords.left + pinImgCoords.width / 2),
+      Math.round(pinImgCoords.top + pinImgCoords.height + parseFloat(pinAfterElement.borderTopWidth)));
+};
+
+var setStateElements = function (elements, flag) {
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = flag;
+  }
+};
+
+var setStatePage = function (flag) {
+  setStateElements(fieldsetElements, flag);
+  setStateElements(filterElements, flag);
+  featuresElement.disabled = flag;
+};
+
+var setActiveState = function (flag) {
+  if (adFormElement.classList.contains('ad-form--disabled')) {
+    adFormElement.classList.remove('ad-form--disabled');
+
+    showPins(adverts);
+    setAddressPinLocationActive();
+    setStatePage(flag);
+  }
+};
+
+var setInactiveState = function (flag) {
+  setAddressPinLocationInactive();
+  setStatePage(flag);
+};
+
+var activateStatePage = function (flag) {
+  if (!flag) {
+    setActiveState(flag);
+    return;
+  }
+
+  setInactiveState(flag);
+};
+
+activateStatePage(StatePage.INACTIVE);
+
+pinMainElement.addEventListener('mousedown', function () {
+  activateStatePage(StatePage.ACTIVE);
+});
+
+pinMainElement.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === KEYCODE_ENTER) {
+    activateStatePage(StatePage.ACTIVE);
+  }
+});
