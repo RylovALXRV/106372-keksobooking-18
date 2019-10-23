@@ -184,10 +184,7 @@ if (elementDisabled) {
 
 var KEYCODE_ENTER = 13;
 
-var StatePage = {
-  ACTIVE: false,
-  INACTIVE: true
-};
+var isPageActive = false;
 
 var adFormElement = document.querySelector('.ad-form');
 var inputAddressElement = adFormElement.querySelector('#address');
@@ -198,39 +195,39 @@ var featuresElement = mapElement.querySelector('.map__features');
 var pinMainElement = mapElement.querySelector('.map__pin--main');
 var pinImgElement = pinMainElement.querySelector('img');
 
-var Coord = function (coord) {
+var Parameter = function (coord) {
   this.height = coord.height;
   this.left = coord.left + window.pageXOffset;
   this.top = coord.top + window.pageYOffset;
   this.width = coord.width;
 };
 
-var getPinLocation = function (locationX, locationY) {
+Parameter.prototype.getElementLocation = function (locationX, locationY) {
   return parseFloat(locationX) + ', ' + parseFloat(locationY);
 };
 
-var setAddressPinLocationInactive = function () {
-  var pinMainCoords = new Coord(pinMainElement.getBoundingClientRect());
+var setInitPinAddress = function () {
+  var pinMainParameter = new Parameter(pinMainElement.getBoundingClientRect());
 
-  inputAddressElement.value = getPinLocation(Math.round(pinMainCoords.left + pinMainCoords.width / 2),
-      Math.round(pinMainCoords.top + pinMainCoords.height / 2));
+  inputAddressElement.value = pinMainParameter.getElementLocation(Math.round(pinMainParameter.left + pinMainParameter.width / 2),
+      Math.round(pinMainParameter.top + pinMainParameter.height / 2));
 };
 
-var setAddressPinLocationActive = function () {
-  var pinImgCoords = new Coord(pinImgElement.getBoundingClientRect());
+var setPinAddress = function () {
+  var pinImgParameter = new Parameter(pinImgElement.getBoundingClientRect());
   var pinAfterElement = getComputedStyle(pinMainElement, '::after');
 
-  inputAddressElement.value = getPinLocation(Math.round(pinImgCoords.left + pinImgCoords.width / 2),
-      Math.round(pinImgCoords.top + pinImgCoords.height + parseFloat(pinAfterElement.borderTopWidth)));
+  inputAddressElement.value = pinImgParameter.getElementLocation(Math.round(pinImgParameter.left + pinImgParameter.width / 2),
+      Math.round(pinImgParameter.top + pinImgParameter.height + parseFloat(pinAfterElement.borderTopWidth)));
 };
 
-var setStateElements = function (elements, flag) {
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].disabled = flag;
-  }
+var setStateElements = function (elements, isEnable) {
+  elements.forEach(function (element) {
+    element.disabled = isEnable;
+  });
 };
 
-var setStatePage = function (flag) {
+var setStateFields = function (flag) {
   setStateElements(fieldsetElements, flag);
   setStateElements(filterElements, flag);
   featuresElement.disabled = flag;
@@ -241,14 +238,14 @@ var setActiveState = function (flag) {
     adFormElement.classList.remove('ad-form--disabled');
 
     showPins(adverts);
-    setAddressPinLocationActive();
-    setStatePage(flag);
+    setPinAddress();
+    setStateFields(flag);
   }
 };
 
 var setInactiveState = function (flag) {
-  setAddressPinLocationInactive();
-  setStatePage(flag);
+  setInitPinAddress();
+  setStateFields(flag);
 };
 
 var activateStatePage = function (flag) {
@@ -260,14 +257,16 @@ var activateStatePage = function (flag) {
   setInactiveState(flag);
 };
 
-activateStatePage(StatePage.INACTIVE);
+// хотел вообще убрать этот аргумент, а переменную вставлять аргументом в ф-ии setActiveState(isPageActive) и др.
+// но тогда не понятно становиться - все три ф-ии одинаковые внешне
+activateStatePage(!isPageActive);
 
 pinMainElement.addEventListener('mousedown', function () {
-  activateStatePage(StatePage.ACTIVE);
+  activateStatePage(isPageActive);
 });
 
 pinMainElement.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === KEYCODE_ENTER) {
-    activateStatePage(StatePage.ACTIVE);
+  if (evt.keyCode === KEYCODE_ENTER && mapElement.classList.contains('map--faded')) {
+    activateStatePage(isPageActive);
   }
 });

@@ -2,29 +2,22 @@
 
 (function () {
 
-  var NumberSeat = {
-    ZERO: 0,
-    ONE: 1,
-    TWO: 2,
-    THREE: 3,
-    ONE_HUNDRED: 100
-  };
+  var ROOMS_MAX = 100;
 
   var Feature = {
     'room_number': function (target) {
       roomsValue = parseFloat(target.value);
     },
     'capacity': function (target) {
-      capacityValue = parseFloat(target.value);
+      capacityValue = target.value;
     }
   };
 
-  var TextError = {
-    CAPACITY_ONE: 'Количество гостей не должно превышать одного',
-    CAPACITY_TWO: 'Количество гостей не должно превышать двух',
-    CAPACITY_THREE: 'Количество гостей не должно превышать трех',
-    CAPACITY_ONE_HUNDRED: 'Количество мест должно быть \'не для гостей\'',
-    CAPACITY_TRUE: ''
+  var NumberRooms = {
+    1: ['1'],
+    2: ['1', '2'],
+    3: ['1', '2', '3'],
+    100: ['0']
   };
 
   var adFormElement = document.querySelector('.ad-form');
@@ -32,27 +25,21 @@
   var roomsElement = adFormElement.querySelector('#room_number');
 
   var roomsValue = parseFloat(roomsElement.value);
-  var capacityValue = parseFloat(capacityElement.value);
+  var capacityValue = null;
 
   var checkCapacity = function () {
-    var textError = null;
+    var textError = 'Количество мест должно быть ';
+    var seats = NumberRooms[roomsValue];
 
-    if (roomsValue === NumberSeat.ONE && capacityValue !== NumberSeat.ONE) {
-      textError = TextError.CAPACITY_ONE;
-    } else if (roomsValue === NumberSeat.TWO && (capacityValue < NumberSeat.ONE || capacityValue > NumberSeat.TWO)) {
-      textError = TextError.CAPACITY_TWO;
-    } else if (roomsValue === NumberSeat.THREE && (capacityValue < NumberSeat.ONE || capacityValue > NumberSeat.THREE)) {
-      textError = TextError.CAPACITY_THREE;
-    } else if (roomsValue === NumberSeat.ONE_HUNDRED && capacityValue !== NumberSeat.ZERO) {
-      textError = TextError.CAPACITY_ONE_HUNDRED;
+    if (roomsValue === ROOMS_MAX && !~seats.indexOf(capacityValue)) {
+      textError += '\'не для гостей\'';
+    } else if (!~seats.indexOf(capacityValue)) {
+      textError += 'не выше ' + seats.length;
     } else {
-      textError = TextError.CAPACITY_TRUE;
-      capacityElement.style.boxShadow = '';
+      textError = '';
     }
 
     capacityElement.setCustomValidity(textError);
-
-    return textError;
   };
 
   adFormElement.addEventListener('input', function (evt) {
@@ -69,16 +56,5 @@
     Feature[target.id](target);
 
     checkCapacity();
-  });
-
-  // если после активации формы пользователь не выбрал
-  // поля комнат и количество мест - форму не отправляем.
-  adFormElement.addEventListener('submit', function (evt) {
-    var textError = checkCapacity();
-
-    if (textError) {
-      evt.preventDefault();
-      capacityElement.style.boxShadow = '0 0 2px 2px #ff6547';
-    }
   });
 })();
