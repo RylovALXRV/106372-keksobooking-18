@@ -31,10 +31,8 @@
     var textError = 'Количество мест должно быть ';
     var seats = NumberRooms[roomsValue];
 
-    if (roomsValue === ROOMS_MAX && !~seats.indexOf(capacityValue)) {
-      textError += '\'не для гостей\'';
-    } else if (!~seats.indexOf(capacityValue)) {
-      textError += 'не выше ' + seats.length;
+    if (!~seats.indexOf(capacityValue)) {
+      textError = (roomsValue !== ROOMS_MAX) ? textError + 'не больше ' + seats.length : textError + '\'не для гостей\'';
     } else {
       textError = '';
     }
