@@ -4,12 +4,31 @@
 
   var ROOMS_MAX = 100;
 
+  var priceTypeOfHousing = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
+
   var Feature = {
     'room_number': function (target) {
       roomsValue = parseFloat(target.value);
     },
     'capacity': function (target) {
       capacityValue = target.value;
+    },
+    'timein': function (target) {
+      document.querySelector('#timeout').value = target.value;
+    },
+    'timeout': function (target) {
+      document.querySelector('#timein').value = target.value;
+    },
+    'type': function (target) {
+      var priceInputElement = document.querySelector('#price');
+
+      priceInputElement.min = priceTypeOfHousing[target.value];
+      priceInputElement.placeholder = priceTypeOfHousing[target.value];
     }
   };
 
