@@ -7,7 +7,7 @@
   var mapElement = document.querySelector('.map');
   var filtersElement = mapElement.querySelector('.map__filters-container');
 
-  var getTypeHouse = function (type) {
+  var getAccommodationType = function (type) {
     switch (type) {
       case 'flat':
         return 'Квартира';
@@ -50,7 +50,7 @@
     return fragment;
   };
 
-  var appendCard = function (advert) {
+  var showCard = function (advert) {
     var popupElement = cardTemplate.cloneNode(true);
 
     popupElement.querySelector('.popup__avatar').src = advert.author;
@@ -62,31 +62,29 @@
     popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin
       + ', выезд до ' + advert.offer.checkout;
     popupElement.querySelector('.popup__title').textContent = advert.offer.title;
-    popupElement.querySelector('.popup__type').textContent = getTypeHouse(advert.offer.type);
+    popupElement.querySelector('.popup__type').textContent = getAccommodationType(advert.offer.type);
 
     popupElement.querySelector('.popup__features').appendChild(getFeatures(advert.offer.features));
     popupElement.querySelector('.popup__photos').appendChild(getPhotos(advert.offer.photos));
 
-    // => поэтому здесь не могу правильно использовать ф-ию closePopup() из pin.js
     popupElement.querySelector('.popup__close').addEventListener('click', function () {
-      hideCard();
+      window.map.closePopup();
     });
-    // <=
 
     mapElement.insertBefore(popupElement, filtersElement);
   };
 
   var hideCard = function () {
-    var cardAdvert = document.querySelector('.map__card');
+    var card = document.querySelector('.map__card');
 
-    if (cardAdvert) {
-      cardAdvert.remove();
+    if (card) {
+      card.remove();
     }
   };
 
   window.card = {
     hide: hideCard,
-    append: appendCard
+    show: showCard
   };
 
 })();

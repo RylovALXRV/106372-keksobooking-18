@@ -70,7 +70,7 @@
   };
 
   window.data = {
-    adverts: generateAdverts
+    generate: generateAdverts
   };
 
 })();

@@ -4,7 +4,7 @@
 
   var ROOMS_MAX = 100;
 
-  var priceTypeOfHousing = {
+  var PriceAccommodationType = {
     'bungalo': 0,
     'flat': 1000,
     'house': 5000,
@@ -27,8 +27,8 @@
     'type': function (target) {
       var priceInputElement = document.querySelector('#price');
 
-      priceInputElement.min = priceTypeOfHousing[target.value];
-      priceInputElement.placeholder = priceTypeOfHousing[target.value];
+      priceInputElement.min = PriceAccommodationType[target.value];
+      priceInputElement.placeholder = PriceAccommodationType[target.value];
     }
   };
 
