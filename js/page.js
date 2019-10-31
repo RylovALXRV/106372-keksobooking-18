@@ -2,18 +2,36 @@
 
 (function () {
 
-  var mapElement = document.querySelector('.map');
-  var pinMainElement = mapElement.querySelector('.map__pin--main');
+  var pinMainElement = document.querySelector('.map .map__pin--main');
 
-  window.mainPin.deactivatePage();
+  var isPageActive = null;
+
+  var activatePage = function () {
+    if (isPageActive) {
+      isPageActive = false;
+
+      window.pins.show(window.data.generate());
+      window.form.activate();
+      window.map.toggleStateFilters(isPageActive);
+    }
+  };
+
+  var deactivatePage = function () {
+    isPageActive = true;
+
+    window.form.init();
+    window.map.toggleStateFilters(isPageActive);
+  };
+
+  deactivatePage();
 
   pinMainElement.addEventListener('mousedown', function () {
-    window.mainPin.activatePage();
+    activatePage();
   });
 
   pinMainElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.KEYCODE_ENTER && mapElement.classList.contains('map--faded')) {
-      window.mainPin.activatePage();
+    if (evt.keyCode === window.util.KEYCODE_ENTER && document.classList.contains('.map map--faded')) {
+      activatePage();
     }
   });
 })();
