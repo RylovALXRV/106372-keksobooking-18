@@ -7,6 +7,12 @@
   var mapElement = document.querySelector('.map');
   var filtersElement = mapElement.querySelector('.map__filters-container');
 
+  var getUserName = function (photo) {
+    var photoLastSlashIndex = photo.lastIndexOf('/');
+
+    return photo.slice(photoLastSlashIndex + 1);
+  };
+
   var getAccommodationType = function (type) {
     switch (type) {
       case 'flat':
@@ -52,8 +58,10 @@
 
   var showCard = function (advert) {
     var popupElement = cardTemplate.cloneNode(true);
+    var avatarElement = popupElement.querySelector('.popup__avatar');
 
-    popupElement.querySelector('.popup__avatar').src = advert.author;
+    avatarElement.alt = getUserName(advert.author.avatar);
+    avatarElement.src = advert.author.avatar;
     popupElement.querySelector('.popup__description').textContent = advert.offer.description;
     popupElement.querySelector('.popup__text--address').textContent = advert.offer.address;
     popupElement.querySelector('.popup__text--capacity').textContent = advert.offer.rooms + ' комнаты для '
@@ -86,5 +94,4 @@
     hide: hideCard,
     show: showCard
   };
-
 })();

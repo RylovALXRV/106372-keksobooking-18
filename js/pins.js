@@ -19,7 +19,7 @@
     pinElement.style.left = advert.location.x + 'px';
     pinElement.style.top = advert.location.y + 'px';
     imgElement.alt = advert.offer.title;
-    imgElement.src = advert.author;
+    imgElement.src = advert.author.avatar;
 
     pinElement.addEventListener('click', function (evt) {
       evt.preventDefault();
