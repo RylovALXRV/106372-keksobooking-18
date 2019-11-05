@@ -41,7 +41,9 @@
   };
 
   Coord.prototype.setElementCoord = function (coord) {
-    window.form.setAddress(coord.getElementLocation(Math.round(coord.x + pinCenterX), Math.round(coord.y + Pin.TOTAL_HEIGHT)));
+    coord.setResultCoords(coord);
+
+    window.form.setAddress(coord.getElementLocation(Math.round(coord.x + pinCenterX), Math.round(coord.y)));
 
     pinMainElement.style.left = coord.x + 'px';
     pinMainElement.style.top = coord.y + 'px';
@@ -60,7 +62,6 @@
       mainPinCoord = new Coord(evtMove.clientX, evtMove.clientY);
       var result = new Coord(pinMainElement.offsetLeft - shift.x, pinMainElement.offsetTop - shift.y);
 
-      result.setResultCoords(result);
       result.setElementCoord(result);
     };
 
