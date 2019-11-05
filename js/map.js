@@ -25,8 +25,13 @@
     featuresElement.disabled = isDisabled;
   };
 
+  var getMapParameters = function () {
+    return mapElement.getBoundingClientRect();
+  };
+
   window.map = {
     closePopup: closePopup,
+    getParameter: getMapParameters,
     onPopupEsc: onPopupEscKeydown,
     toggleStateFilters: toggleDisabledStateOfFilters
   };

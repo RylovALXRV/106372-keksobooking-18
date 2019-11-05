@@ -44,7 +44,7 @@
   var roomsElement = adFormElement.querySelector('#room_number');
 
   var roomsValue = parseFloat(roomsElement.value);
-  var capacityValue = null;
+  var capacityValue = capacityElement.value;
 
   var checkCapacity = function () {
     var textError = 'Количество мест должно быть ';

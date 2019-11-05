@@ -7,8 +7,6 @@
   var fieldsetElements = adFormElement.querySelectorAll('fieldset');
   var inputAddressElement = adFormElement.querySelector('#address');
 
-  var isDisabled = true;
-
   var setAddress = function (location) {
     inputAddressElement.value = location;
   };
@@ -17,14 +15,14 @@
     adFormElement.classList.remove('ad-form--disabled');
 
     setAddress(window.mainPin.activeLocation);
-    window.util.toggleDisabledStateOfElements(fieldsetElements, !isDisabled);
+    window.util.toggleDisabledStateOfElements(fieldsetElements, false);
   };
 
   var initStateForm = function () {
     adFormElement.classList.add('ad-form--disabled');
 
     setAddress(window.mainPin.initLocation);
-    window.util.toggleDisabledStateOfElements(fieldsetElements, isDisabled);
+    window.util.toggleDisabledStateOfElements(fieldsetElements, true);
   };
 
   buttonResetElement.addEventListener('click', function () {
@@ -33,6 +31,7 @@
 
   window.form = {
     activate: activateStateForm,
-    init: initStateForm
+    init: initStateForm,
+    setAddress: setAddress
   };
 })();
