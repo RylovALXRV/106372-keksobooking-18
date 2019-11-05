@@ -66,13 +66,6 @@
     };
 
     var onMainPinMouseUp = function () {
-      // В задании написано:
-      /*
-      * Учтите, расчёт координат метки и их запись в поле адреса должна дублироваться и в обработчике mouseup,
-      * потому что в некоторых случаях пользователь может нажать мышь на метке, но никуда её не переместить.
-      * Напишите универсальную функцию расчёта координат, чтобы избавиться от дублирования кода.*/
-
-      // Но я не пойму зачем, если при mousedown в начале уже записываются координаты в адресс??
       document.removeEventListener('mousemove', onMainPinMousemove);
       document.removeEventListener('mouseup', onMainPinMouseUp);
     };
@@ -82,7 +75,7 @@
   });
 
   pinMainElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.KEYCODE_ENTER && document.classList.contains('.map map--faded')) {
+    if (evt.keyCode === window.util.KEYCODE_ENTER) {
       window.page.activate();
     }
   });
