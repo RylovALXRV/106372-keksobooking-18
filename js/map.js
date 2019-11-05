@@ -8,7 +8,7 @@
   var filterElements = filtersElement.querySelectorAll('.map__filter');
 
   var onPopupEscKeydown = function (evt) {
-    if (evt.keyCode === window.util.KEYCODE_ESC) {
+    if (window.util.isKeyCode(evt, window.util.KEYCODE_ESC)) {
       closePopup();
     }
   };

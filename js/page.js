@@ -8,7 +8,7 @@
     if (isPageActive) {
       isPageActive = false;
 
-      window.pins.show(window.data.generate());
+      window.backend.load(window.pins.show, window.modal.showError);
       window.form.activate();
       window.map.toggleStateFilters();
     }

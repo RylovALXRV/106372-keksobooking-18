@@ -75,7 +75,7 @@
   });
 
   pinMainElement.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.KEYCODE_ENTER) {
+    if (window.util.isKeyCode(evt, window.util.KEYCODE_ENTER)) {
       window.page.activate();
     }
   });
