@@ -41,7 +41,6 @@
     adFormElement.classList.add('ad-form--disabled');
 
     resetForm();
-    setAddress(window.mainPin.initLocation);
     window.util.toggleDisabledStateOfElements(fieldsetElements, true);
   };
 
