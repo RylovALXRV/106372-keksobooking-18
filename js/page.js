@@ -10,20 +10,21 @@
 
       window.backend.load(window.pins.show, window.modal.showError);
       window.form.activate();
-      window.map.toggleStateFilters();
+      window.map.toggleStateFilters(isPageActive);
     }
   };
 
   var deactivatePage = function () {
     isPageActive = true;
 
+    window.map.setDefault();
     window.form.init();
-    window.map.toggleStateFilters();
-  };
-
-  window.page = {
-    activate: activatePage
   };
 
   deactivatePage();
+
+  window.page = {
+    activate: activatePage,
+    deactivate: deactivatePage
+  };
 })();

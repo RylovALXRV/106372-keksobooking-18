@@ -49,7 +49,13 @@
     pinMainElement.style.top = coord.y + 'px';
   };
 
+  var pinDefaultLocation = new Coord(pinMainElement.offsetLeft, pinMainElement.offsetTop);
   var mainPinCoord = new Coord();
+
+  var setPinDefaultLocation = function () {
+    pinMainElement.style.left = pinDefaultLocation.x + 'px';
+    pinMainElement.style.top = pinDefaultLocation.y + 'px';
+  };
 
   pinMainElement.addEventListener('mousedown', function (evt) {
     window.page.activate();
@@ -84,6 +90,7 @@
     activeLocation: mainPinCoord.getElementLocation(Math.round(pinMainElement.offsetLeft + pinCenterX),
         Math.round(pinMainElement.offsetTop + Pin.TOTAL_HEIGHT)),
     initLocation: mainPinCoord.getElementLocation(Math.round(pinMainElement.offsetLeft + pinCenterX),
-        Math.round(pinMainElement.offsetTop + Pin.START_HEIGHT / 2))
+        Math.round(pinMainElement.offsetTop + Pin.START_HEIGHT / 2)),
+    setDefaultLocation: setPinDefaultLocation
   };
 })();
