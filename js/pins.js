@@ -54,7 +54,16 @@
     mapElement.classList.remove('map--faded');
   };
 
+  var hidePins = function () {
+    var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pinElements.forEach(function (pinElement) {
+      pinElement.remove();
+    });
+  };
+
   window.pins = {
+    hide: hidePins,
     reset: resetCurrentPin,
     show: showPins
   };

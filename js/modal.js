@@ -3,6 +3,7 @@
 (function () {
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var onModalCloseKeyDown = function (evt) {
     if (window.util.isKeyCode(evt, window.util.KEYCODE_ESC)) {
@@ -17,6 +18,14 @@
 
     if (errorElement) {
       errorElement.remove();
+    }
+  };
+
+  var hideModalSuccess = function () {
+    var successElement = document.querySelector('.success');
+
+    if (successElement) {
+      successElement.remove();
     }
   };
 
@@ -37,7 +46,22 @@
     document.querySelector('main').appendChild(errorElement);
   };
 
+  var showModalSuccess = function () {
+    var successElement = successTemplate.cloneNode(true);
+
+    successElement.addEventListener('click', function (evt) {
+      var element = document.elementFromPoint(evt.clientX, evt.clientY);
+
+      if (element.classList.contains('success')) {
+        hideModalSuccess();
+      }
+    });
+
+    document.querySelector('main').appendChild(successElement);
+  };
+
   window.modal = {
-    showError: showModalError
+    showError: showModalError,
+    showSuccess: showModalSuccess
   };
 })();

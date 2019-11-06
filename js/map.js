@@ -29,10 +29,19 @@
     return mapElement.getBoundingClientRect();
   };
 
+  var setDefaultStateMap = function () {
+    mapElement.classList.add('map--faded');
+
+    toggleDisabledStateOfFilters(true);
+    window.mainPin.setDefaultLocation();
+    window.pins.hide();
+  };
+
   window.map = {
     closePopup: closePopup,
     getParameter: getMapParameters,
     onPopupEsc: onPopupEscKeydown,
+    setDefault: setDefaultStateMap,
     toggleStateFilters: toggleDisabledStateOfFilters
   };
 })();

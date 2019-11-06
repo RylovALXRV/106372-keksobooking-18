@@ -46,6 +46,10 @@
   var roomsValue = parseFloat(roomsElement.value);
   var capacityValue = capacityElement.value;
 
+  var setDefaultPrice = function (target) {
+    Feature['type'](target);
+  };
+
   var checkCapacity = function () {
     var textError = 'Количество мест должно быть ';
     var seats = NumberRooms[roomsValue];
@@ -74,4 +78,8 @@
 
     checkCapacity();
   });
+
+  window.validation = {
+    setDefaultPrice: setDefaultPrice
+  };
 })();
