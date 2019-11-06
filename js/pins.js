@@ -55,11 +55,11 @@
   };
 
   var hidePins = function () {
-    var pinElements = mapElement.querySelectorAll('.map__pin');
+    var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    for (var i = 1; i < pinElements.length; i++) {
-      pinElements[i].remove();
-    }
+    pinElements.forEach(function (pinElement) {
+      pinElement.remove();
+    });
   };
 
   window.pins = {
