@@ -16,6 +16,21 @@
     featuresElement.disabled = isDisabled;
   };
 
+  var activateFilters = function (adverts) {
+    if (!advertCards) {
+      advertCards = adverts;
+      toggleDisabledStateOfFilters(false);
+    }
+
+    window.pins.render(adverts);
+  };
+
+  var deactivateFilters = function () {
+    advertCards = null;
+
+    filtersElement.reset();
+    toggleDisabledStateOfFilters(true);
+  };
 
   var filterByAccommodationType = function (adverts, target) {
     if (target.value === 'any') {
@@ -30,10 +45,6 @@
   housingTypeElement.addEventListener('click', function (evt) {
     var target = evt.target;
 
-    if (!advertCards) {
-      advertCards = window.pins.getAdverts();
-    }
-
     advertsFiltered = filterByAccommodationType(advertCards, target);
 
     window.pins.hide();
@@ -41,6 +52,7 @@
   });
 
   window.filters = {
-    toggleStateFilters: toggleDisabledStateOfFilters
+    activate: activateFilters,
+    deactivate: deactivateFilters
   };
 })();

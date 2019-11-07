@@ -8,12 +8,7 @@
   var mapElement = document.querySelector('.map');
   var pinsElement = document.querySelector('.map__pins');
 
-  var currentAdverts = null;
   var currentPin = null;
-
-  var getCurrentAdverts = function () {
-    return currentAdverts;
-  };
 
   var resetCurrentPin = function () {
     currentPin = null;
@@ -47,7 +42,6 @@
 
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
-    currentAdverts = adverts;
     adverts = (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
 
     adverts.forEach(function (advert) {
@@ -58,7 +52,7 @@
   };
 
   var showPins = function (adverts) {
-    renderPins(adverts);
+    window.filters.activate(adverts);
 
     mapElement.classList.remove('map--faded');
   };
@@ -72,8 +66,8 @@
   };
 
   window.pins = {
-    getAdverts: getCurrentAdverts,
     hide: hidePins,
+    render: renderPins,
     reset: resetCurrentPin,
     show: showPins
   };
