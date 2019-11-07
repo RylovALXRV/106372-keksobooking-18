@@ -2,11 +2,18 @@
 
 (function () {
 
+  var AMOUNT_PINS = 5;
+
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mapElement = document.querySelector('.map');
   var pinsElement = document.querySelector('.map__pins');
 
+  var currentAdverts = null;
   var currentPin = null;
+
+  var getCurrentAdverts = function () {
+    return currentAdverts;
+  };
 
   var resetCurrentPin = function () {
     currentPin = null;
@@ -40,6 +47,8 @@
 
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
+    currentAdverts = adverts;
+    adverts = (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
 
     adverts.forEach(function (advert) {
       fragment.appendChild(renderPin(advert));
@@ -63,6 +72,7 @@
   };
 
   window.pins = {
+    getAdverts: getCurrentAdverts,
     hide: hidePins,
     reset: resetCurrentPin,
     show: showPins
