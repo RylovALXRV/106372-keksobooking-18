@@ -47,6 +47,7 @@
 
     advertsFiltered = filterByAccommodationType(advertCards, target);
 
+    window.card.hide();
     window.pins.hide();
     window.pins.show(advertsFiltered);
   });
