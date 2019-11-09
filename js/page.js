@@ -10,7 +10,6 @@
 
       window.backend.load(window.pins.show, window.modal.showError);
       window.form.activate();
-      window.map.toggleStateFilters(isPageActive);
     }
   };
 
@@ -19,6 +18,7 @@
 
     window.map.setDefault();
     window.form.init();
+    window.filters.deactivate();
   };
 
   deactivatePage();

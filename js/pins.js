@@ -2,6 +2,8 @@
 
 (function () {
 
+  var AMOUNT_PINS = 5;
+
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var mapElement = document.querySelector('.map');
   var pinsElement = document.querySelector('.map__pins');
@@ -40,6 +42,7 @@
 
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
+    adverts = (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
 
     adverts.forEach(function (advert) {
       fragment.appendChild(renderPin(advert));
@@ -49,7 +52,7 @@
   };
 
   var showPins = function (adverts) {
-    renderPins(adverts);
+    window.filters.activate(adverts);
 
     mapElement.classList.remove('map--faded');
   };
@@ -64,6 +67,7 @@
 
   window.pins = {
     hide: hidePins,
+    render: renderPins,
     reset: resetCurrentPin,
     show: showPins
   };
