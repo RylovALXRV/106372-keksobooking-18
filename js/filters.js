@@ -42,7 +42,7 @@
     });
   };
 
-  housingTypeElement.addEventListener('click', function (evt) {
+  housingTypeElement.addEventListener('change', function (evt) {
     var target = evt.target;
 
     advertsFiltered = filterByAccommodationType(advertCards, target);

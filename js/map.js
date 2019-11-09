@@ -26,6 +26,7 @@
 
     window.mainPin.setDefaultLocation();
     window.pins.hide();
+    window.card.hide();
   };
 
   window.map = {
