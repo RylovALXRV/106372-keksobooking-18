@@ -4,6 +4,13 @@
 
   var ROOMS_MAX = 100;
 
+  var NumberRooms = {
+    1: ['1'],
+    2: ['1', '2'],
+    3: ['1', '2', '3'],
+    100: ['0']
+  };
+
   var PriceAccommodationType = {
     'bungalo': 0,
     'flat': 1000,
@@ -32,23 +39,12 @@
     }
   };
 
-  var NumberRooms = {
-    1: ['1'],
-    2: ['1', '2'],
-    3: ['1', '2', '3'],
-    100: ['0']
-  };
-
   var adFormElement = document.querySelector('.ad-form');
   var capacityElement = adFormElement.querySelector('#capacity');
   var roomsElement = adFormElement.querySelector('#room_number');
 
-  var roomsValue = parseFloat(roomsElement.value);
   var capacityValue = capacityElement.value;
-
-  var setDefaultPrice = function (target) {
-    Feature['type'](target);
-  };
+  var roomsValue = parseFloat(roomsElement.value);
 
   var checkCapacity = function () {
     var textError = 'Количество мест должно быть ';
@@ -61,6 +57,10 @@
     }
 
     capacityElement.setCustomValidity(textError);
+  };
+
+  var setDefaultPrice = function (target) {
+    Feature['type'](target);
   };
 
   adFormElement.addEventListener('input', function (evt) {

@@ -4,6 +4,10 @@
 
   var mapElement = document.querySelector('.map');
 
+  var getMapParameters = function () {
+    return mapElement.getBoundingClientRect();
+  };
+
   var onPopupEscKeydown = function (evt) {
     if (window.util.isKeyCode(evt, window.util.KEYCODE_ESC)) {
       closePopup();
@@ -15,10 +19,6 @@
     window.pins.reset();
 
     document.removeEventListener('keydown', onPopupEscKeydown);
-  };
-
-  var getMapParameters = function () {
-    return mapElement.getBoundingClientRect();
   };
 
   var setDefaultStateMap = function () {

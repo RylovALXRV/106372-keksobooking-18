@@ -22,8 +22,9 @@
   var initStateForm = function () {
     adFormElement.classList.add('ad-form--disabled');
     adFormElement.reset();
-
     setAddress(window.mainPin.initLocation);
+
+    window.upload.hide();
     window.util.toggleDisabledStateOfElements(fieldsetElements, true);
     window.validation.setDefaultPrice(typeElement);
   };
