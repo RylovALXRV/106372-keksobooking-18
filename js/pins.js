@@ -10,6 +10,16 @@
 
   var currentPin;
 
+  var getCorrectAdverts = function (adverts) {
+    for (var i = 0; i < adverts.length; i++) {
+      if (!adverts[i].offer) {
+        adverts.splice(i--, 1);
+      }
+    }
+
+    return (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
+  };
+
   var hidePins = function () {
     var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -26,10 +36,6 @@
   };
 
   var renderPin = function (advert) {
-    if (!advert.offer) {
-      return false;
-    }
-
     var pinElement = pinTemplate.cloneNode(true);
     var imgElement = pinElement.querySelector('.map__pin img');
 
@@ -55,11 +61,13 @@
     });
 
     return pinElement;
+
   };
 
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
-    adverts = (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
+
+    adverts = getCorrectAdverts(adverts);
 
     adverts.forEach(function (advert) {
       fragment.appendChild(renderPin(advert));
