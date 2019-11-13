@@ -10,7 +10,7 @@
 
   var currentPin;
 
-  var getCorrectAdverts = function (adverts) {
+  var getCorrectPins = function (adverts) {
     for (var i = 0; i < adverts.length; i++) {
       if (!adverts[i].offer) {
         adverts.splice(i--, 1);
@@ -67,7 +67,7 @@
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
 
-    adverts = getCorrectAdverts(adverts);
+    adverts = getCorrectPins(adverts);
 
     adverts.forEach(function (advert) {
       fragment.appendChild(renderPin(advert));
