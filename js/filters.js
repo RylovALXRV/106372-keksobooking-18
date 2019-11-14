@@ -14,15 +14,7 @@
       'value': DEFAULT_STATE,
       'getFeature': function () {
         return function (advert) {
-          switch (filterFeature['housing-type']['value']) {
-            case 'palace':
-            case 'flat':
-            case 'house':
-            case 'bungalo':
-              return advert.offer.type === filterFeature['housing-type']['value'];
-            default:
-              return false;
-          }
+          return advert.offer.type === filterFeature['housing-type']['value'];
         };
       }
     },
@@ -47,16 +39,7 @@
       'value': DEFAULT_STATE,
       'getFeature': function () {
         return function (advert) {
-          switch (filterFeature['housing-rooms']['value']) {
-            case '1':
-              return advert.offer.rooms === 1;
-            case '2':
-              return advert.offer.rooms === 2;
-            case '3':
-              return advert.offer.rooms === 3;
-            default:
-              return false;
-          }
+          return advert.offer.rooms === parseFloat(filterFeature['housing-rooms']['value']);
         };
       }
     },
@@ -64,16 +47,7 @@
       'value': DEFAULT_STATE,
       'getFeature': function () {
         return function (advert) {
-          switch (filterFeature['housing-guests']['value']) {
-            case '0':
-              return advert.offer.guests > 2;
-            case '1':
-              return advert.offer.guests === 1;
-            case '2':
-              return advert.offer.guests === 2;
-            default:
-              return false;
-          }
+          return advert.offer.guests === parseFloat(filterFeature['housing-guests']['value']);
         };
       }
     }
@@ -88,6 +62,12 @@
   var ads = null;
   var inputValues = [];
 
+  var filterCorrectAdverts = function (adverts) {
+    return adverts.filter(function (advert) {
+      return !!advert.offer;
+    });
+  };
+
   var toggleDisabledStateOfFilters = function (isDisabled) {
     window.util.toggleDisabledStateOfElements(filterElements, isDisabled);
     featuresElement.disabled = isDisabled;
@@ -95,7 +75,7 @@
 
   var activateFilters = function (adverts) {
     if (!ads) {
-      ads = adverts;
+      ads = filterCorrectAdverts(adverts);
       toggleDisabledStateOfFilters(false);
     }
 

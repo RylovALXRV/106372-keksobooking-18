@@ -10,16 +10,6 @@
 
   var currentPin;
 
-  var getCorrectPins = function (adverts) {
-    for (var i = 0; i < adverts.length; i++) {
-      if (!adverts[i].offer) {
-        adverts.splice(i--, 1);
-      }
-    }
-
-    return (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
-  };
-
   var hidePins = function () {
     var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -67,7 +57,7 @@
   var renderPins = function (adverts) {
     var fragment = document.createDocumentFragment();
 
-    adverts = getCorrectPins(adverts);
+    adverts = (adverts.length > AMOUNT_PINS) ? adverts.slice(0, 5) : adverts;
 
     adverts.forEach(function (advert) {
       fragment.appendChild(renderPin(advert));
