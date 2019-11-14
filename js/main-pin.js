@@ -2,15 +2,15 @@
 
 (function () {
 
+  var CoordY = {
+    MAX: 630,
+    MIN: 130
+  };
+
   var Pin = {
     START_HEIGHT: 65,
     TOTAL_HEIGHT: 81,
     WIDTH: 65
-  };
-
-  var CoordY = {
-    MAX: 630,
-    MIN: 130
   };
 
   var mapElement = document.querySelector('.map');
@@ -29,10 +29,10 @@
   };
 
   Coord.prototype.setResultCoords = function (coord) {
-    if (coord.x <= 0) {
-      coord.x = 0;
-    } else if (coord.x >= mapParameter.width - Pin.WIDTH) {
-      coord.x = mapParameter.width - Pin.WIDTH;
+    if (coord.x <= -pinCenterX) {
+      coord.x = -pinCenterX;
+    } else if (coord.x >= mapParameter.width - pinCenterX) {
+      coord.x = mapParameter.width - pinCenterX;
     } else if (coord.y <= CoordY.MIN) {
       coord.y = CoordY.MIN;
     } if (coord.y >= CoordY.MAX) {
