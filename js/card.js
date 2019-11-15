@@ -2,25 +2,17 @@
 
 (function () {
 
+  var AccommodationType = {
+    'BUNGALO': 'Бунгало',
+    'FLAT': 'Квартира',
+    'HOUSE': 'Дом',
+    'PALACE': 'Дворец'
+  };
+
   var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   var photoTemplate = document.querySelector('#photo').content.querySelector('.popup__photo');
   var mapElement = document.querySelector('.map');
   var filtersElement = mapElement.querySelector('.map__filters-container');
-
-  var getAccommodationType = function (type) {
-    switch (type) {
-      case 'flat':
-        return 'Квартира';
-      case 'bungalo':
-        return 'Бунгало';
-      case 'house':
-        return 'Дом';
-      case 'palace':
-        return 'Дворец';
-      default:
-        return 'Тип жилья не известен';
-    }
-  };
 
   var getFeatures = function (features) {
     var fragment = document.createDocumentFragment();
@@ -70,19 +62,21 @@
 
     if (card) {
       card.remove();
+      window.pins.resetPin();
+
+      document.removeEventListener('keydown', window.pins.onEscKeydown);
     }
   };
 
   var showFeaturesCard = function (parent, features, selector) {
     var parentElement = parent.querySelector(selector);
-    var childElements = features;
 
-    if (!childElements) {
+    if (!features) {
       parentElement.classList.add('hidden');
       return;
     }
 
-    parentElement.appendChild(childElements);
+    parentElement.appendChild(features);
   };
 
   var showCard = function (advert) {
@@ -99,13 +93,13 @@
     popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + advert.offer.checkin
       + ', выезд до ' + advert.offer.checkout;
     popupElement.querySelector('.popup__title').textContent = advert.offer.title;
-    popupElement.querySelector('.popup__type').textContent = getAccommodationType(advert.offer.type);
+    popupElement.querySelector('.popup__type').textContent = AccommodationType[advert.offer.type.toUpperCase()];
 
     showFeaturesCard(popupElement, getFeatures(advert.offer.features), '.popup__features');
     showFeaturesCard(popupElement, getPhotos(advert.offer.photos), '.popup__photos');
 
     popupElement.querySelector('.popup__close').addEventListener('click', function () {
-      window.map.closePopup();
+      hideCard();
     });
 
     mapElement.insertBefore(popupElement, filtersElement);

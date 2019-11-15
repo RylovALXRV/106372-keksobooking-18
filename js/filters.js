@@ -77,6 +77,8 @@
     if (!ads) {
       ads = filterCorrectAdverts(adverts);
       toggleDisabledStateOfFilters(false);
+      window.pins.render(ads);
+      return;
     }
 
     window.pins.render(adverts);
