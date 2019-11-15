@@ -10,6 +10,12 @@
 
   var currentPin;
 
+  var onPinEscKeydown = function (evt) {
+    if (window.util.isKeyCode(evt, window.util.KeyCode.ESC)) {
+      window.card.hide();
+    }
+  };
+
   var hidePins = function () {
     var pinElements = mapElement.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -44,7 +50,7 @@
         window.card.hide();
         window.card.show(advert);
 
-        document.addEventListener('keydown', window.map.onPopupEsc);
+        document.addEventListener('keydown', onPinEscKeydown);
       }
 
       resetCurrentPin(pinElement);
@@ -74,8 +80,9 @@
 
   window.pins = {
     hide: hidePins,
+    onEscKeydown: onPinEscKeydown,
     render: renderPins,
-    reset: resetCurrentPin,
+    resetPin: resetCurrentPin,
     show: showPins
   };
 })();

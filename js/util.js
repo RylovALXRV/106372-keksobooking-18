@@ -2,8 +2,10 @@
 
 window.util = (function () {
   return {
-    KEYCODE_ENTER: 13,
-    KEYCODE_ESC: 27,
+    KeyCode: {
+      ENTER: 13,
+      ESC: 27
+    },
 
     isKeyCode: function (evt, code) {
       return evt.keyCode === code;

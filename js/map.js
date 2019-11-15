@@ -4,19 +4,6 @@
 
   var mapElement = document.querySelector('.map');
 
-  var onPopupEscKeydown = function (evt) {
-    if (window.util.isKeyCode(evt, window.util.KEYCODE_ESC)) {
-      closePopup();
-    }
-  };
-
-  var closePopup = function () {
-    window.card.hide();
-    window.pins.reset();
-
-    document.removeEventListener('keydown', onPopupEscKeydown);
-  };
-
   var getMapParameters = function () {
     return mapElement.getBoundingClientRect();
   };
@@ -30,9 +17,7 @@
   };
 
   window.map = {
-    closePopup: closePopup,
     getParameter: getMapParameters,
-    onPopupEsc: onPopupEscKeydown,
     setDefault: setDefaultStateMap
   };
 })();

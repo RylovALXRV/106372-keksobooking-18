@@ -6,26 +6,18 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var onModalCloseKeyDown = function (evt) {
-    if (window.util.isKeyCode(evt, window.util.KEYCODE_ESC)) {
-      hideModalError();
+    if (window.util.isKeyCode(evt, window.util.KeyCode.ESC)) {
+      hideModal();
 
       document.removeEventListener('keydown', onModalCloseKeyDown);
     }
   };
 
-  var hideModalError = function () {
-    var errorElement = document.querySelector('.error');
+  var hideModal = function () {
+    var modalElement = document.querySelector('.modal');
 
-    if (errorElement) {
-      errorElement.remove();
-    }
-  };
-
-  var hideModalSuccess = function () {
-    var successElement = document.querySelector('.success');
-
-    if (successElement) {
-      successElement.remove();
+    if (modalElement) {
+      modalElement.remove();
     }
   };
 
@@ -37,12 +29,10 @@
       var element = document.elementFromPoint(evt.clientX, evt.clientY);
 
       if (element.classList.contains('error') || element.classList.contains('error__button')) {
-        hideModalError();
+        hideModal();
       }
     });
-
     document.addEventListener('keydown', onModalCloseKeyDown);
-
     document.querySelector('main').appendChild(errorElement);
   };
 
@@ -53,10 +43,10 @@
       var element = document.elementFromPoint(evt.clientX, evt.clientY);
 
       if (element.classList.contains('success')) {
-        hideModalSuccess();
+        hideModal();
       }
     });
-
+    document.addEventListener('keydown', onModalCloseKeyDown);
     document.querySelector('main').appendChild(successElement);
   };
 
