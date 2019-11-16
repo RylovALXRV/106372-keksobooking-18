@@ -121,7 +121,6 @@
     filteredAds = filteredBySelect(filteredAds, 'housing-price');
     filteredAds = filteredBySelect(filteredAds, 'housing-rooms');
     filteredAds = filteredBySelect(filteredAds, 'housing-guests');
-    filteredAds = filteredBySelect(filteredAds, 'housing-guests');
     filteredAds = filteredByInput(filteredAds);
 
     window.pins.show(filteredAds);

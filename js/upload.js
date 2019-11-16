@@ -10,19 +10,19 @@
   var photosElement = adFormElement.querySelector('.ad-form__photo');
   var previewElement = adFormElement.querySelector('.ad-form-header__preview img');
 
-  var hidePhotos = function () {
-    photosElement.innerHTML = '';
-    previewElement.src = 'img/muffin-grey.svg';
-  };
-
-  var showPhoto = function (result) {
+  var appendPicture = function (result) {
     var photoElement = photoTemplate.cloneNode(true);
     photoElement.src = result;
 
     photosElement.appendChild(photoElement);
   };
 
-  var onPhotoChange = function (inputElement, imgElement) {
+  var hidePictures = function () {
+    photosElement.innerHTML = '';
+    previewElement.src = 'img/muffin-grey.svg';
+  };
+
+  var showPicture = function (inputElement, imgElement) {
     var file = inputElement.files[0];
     var fileName = file.name.toLowerCase();
 
@@ -37,7 +37,7 @@
         if (imgElement) {
           imgElement.src = reader.result;
         } else {
-          showPhoto(reader.result);
+          appendPicture(reader.result);
         }
       });
 
@@ -46,14 +46,14 @@
   };
 
   avatarFileElement.addEventListener('change', function () {
-    onPhotoChange(avatarFileElement, previewElement);
+    showPicture(avatarFileElement, previewElement);
   });
 
   imagesFileElement.addEventListener('change', function () {
-    onPhotoChange(imagesFileElement);
+    showPicture(imagesFileElement);
   });
 
   window.upload = {
-    hide: hidePhotos
+    hide: hidePictures
   };
 })();
