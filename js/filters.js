@@ -100,12 +100,12 @@
     });
   };
 
-  var getSelectValue = function (feature) {
+  var isDefaultValue = function (feature) {
     return filterFeature[feature].value === DEFAULT_STATE;
   };
 
   var getSelectAdverts = function (value, advert) {
-    return getSelectValue(value) ? true : filterFeature[value].getFeature(advert);
+    return isDefaultValue(value) ? true : filterFeature[value].getFeature(advert);
   };
 
   var filterAds = window.debounce(function () {
