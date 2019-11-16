@@ -16,7 +16,7 @@
     }
   };
 
-  var onDataLoad = function (onLoad, onError) {
+  var loadData = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -42,14 +42,14 @@
   };
 
   var load = function (onLoad, onError) {
-    var xhr = onDataLoad(onLoad, onError);
+    var xhr = loadData(onLoad, onError);
 
     xhr.open(Request['get'].GET, Request['get'].URL);
     xhr.send();
   };
 
   var save = function (data, onLoad, onError) {
-    var xhr = onDataLoad(onLoad, onError);
+    var xhr = loadData(onLoad, onError);
 
     xhr.open(Request['post'].POST, Request['post'].URL);
     xhr.send(data);

@@ -81,7 +81,7 @@
   });
 
   pinMainElement.addEventListener('keydown', function (evt) {
-    if (window.util.isKeyCode(evt, window.util.KeyCode.ENTER)) {
+    if (window.util.isEnterEvent(evt)) {
       window.page.activate();
     }
   });

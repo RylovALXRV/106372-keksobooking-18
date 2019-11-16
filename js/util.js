@@ -1,14 +1,18 @@
 'use strict';
 
-window.util = (function () {
-  return {
-    KeyCode: {
-      ENTER: 13,
-      ESC: 27
-    },
+(function () {
 
-    isKeyCode: function (evt, code) {
-      return evt.keyCode === code;
+  var KeyCode = {
+    ENTER: 13,
+    ESC: 27
+  };
+
+  window.util = {
+    isEnterEvent: function (evt) {
+      return evt.keyCode === KeyCode.ENTER;
+    },
+    isEscEvent: function (evt) {
+      return evt.keyCode === KeyCode.ESC;
     },
     toggleDisabledStateOfElements: function (elements, isDisabled) {
       elements.forEach(function (element) {

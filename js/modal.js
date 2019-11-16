@@ -6,10 +6,8 @@
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var onModalCloseKeyDown = function (evt) {
-    if (window.util.isKeyCode(evt, window.util.KeyCode.ESC)) {
+    if (window.util.isEscEvent(evt)) {
       hideModal();
-
-      document.removeEventListener('keydown', onModalCloseKeyDown);
     }
   };
 
@@ -18,6 +16,8 @@
 
     if (modalElement) {
       modalElement.remove();
+
+      document.removeEventListener('keydown', onModalCloseKeyDown);
     }
   };
 

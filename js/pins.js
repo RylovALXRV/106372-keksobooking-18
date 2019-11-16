@@ -11,7 +11,7 @@
   var currentPin;
 
   var onPinEscKeydown = function (evt) {
-    if (window.util.isKeyCode(evt, window.util.KeyCode.ESC)) {
+    if (window.util.isEscEvent(evt)) {
       window.card.hide();
     }
   };
