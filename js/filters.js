@@ -13,34 +13,35 @@
     'housing-type': {
       'value': DEFAULT_STATE,
       'getFeature': function (advert) {
-          return advert.offer.type === filterFeature['housing-type']['value'];
+        return advert.offer.type === filterFeature['housing-type']['value'];
       }
     },
     'housing-price': {
       'value': DEFAULT_STATE,
       'getFeature': function (advert) {
-          switch (filterFeature['housing-price']['value']) {
-            case 'low':
-              return advert.offer.price < Price.MIN;
-            case 'middle':
-              return advert.offer.price >= Price.MIN && advert.offer.price <= Price.MAX;
-            case 'high':
-              return advert.offer.price > Price.MAX;
-            default:
-              return false;
-          }
+        switch (filterFeature['housing-price']['value']) {
+          case 'low':
+            return advert.offer.price < Price.MIN;
+          case 'middle':
+            return advert.offer.price >= Price.MIN && advert.offer.price <= Price.MAX;
+          case 'high':
+            return advert.offer.price > Price.MAX;
+          default:
+            return false;
+
+        }
       }
     },
     'housing-rooms': {
       'value': DEFAULT_STATE,
       'getFeature': function (advert) {
-          return advert.offer.rooms === parseFloat(filterFeature['housing-rooms']['value']);
+        return advert.offer.rooms === parseFloat(filterFeature['housing-rooms']['value']);
       }
     },
     'housing-guests': {
       'value': DEFAULT_STATE,
       'getFeature': function (advert) {
-          return advert.offer.guests === parseFloat(filterFeature['housing-guests']['value']);
+        return advert.offer.guests === parseFloat(filterFeature['housing-guests']['value']);
       }
     }
   };
@@ -109,17 +110,17 @@
 
   var filterAds = window.debounce(function () {
 
-    var filterAds = ads.filter(function (advert) {
-        var filterByType = getSelectAdverts('housing-type', advert);
-        var filterByPrice = getSelectAdverts('housing-price', advert);
-        var filterByRooms = getSelectAdverts('housing-rooms', advert);
-        var filterByGuests = getSelectAdverts('housing-guests', advert);
-        var filterByFeatures = filteredByInput(advert);
+    var filterAdverts = ads.filter(function (advert) {
+      var filterByType = getSelectAdverts('housing-type', advert);
+      var filterByPrice = getSelectAdverts('housing-price', advert);
+      var filterByRooms = getSelectAdverts('housing-rooms', advert);
+      var filterByGuests = getSelectAdverts('housing-guests', advert);
+      var filterByFeatures = filteredByInput(advert);
 
-        return filterByType && filterByPrice && filterByRooms && filterByGuests && filterByFeatures;
+      return filterByType && filterByPrice && filterByRooms && filterByGuests && filterByFeatures;
     });
 
-    window.pins.show(filterAds);
+    window.pins.show(filterAdverts);
   });
 
   filtersElement.addEventListener('change', function (evt) {
